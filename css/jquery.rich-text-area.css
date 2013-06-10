@@ -18,17 +18,7 @@
   border: none;
   color: transparent;
 }
-.rich-text-area .mirror .meta {
-  -webkit-border-radius: 2px;
-     -moz-border-radius: 2px;
-          border-radius: 2px;
-  
-  -webkit-box-shadow: 0 0 0 1px hsl(219, 63%, 78%);
-     -mox-box-shadow: 0 0 0 1px hsl(219, 63%, 78%);
-          box-shadow: 0 0 0 1px hsl(219, 63%, 78%);
-  
-  font-weight: normal;
-}
+
 .rich-text-area .mirror-container, .rich-text-area textarea {
   /*position: absolute;*/
   width: 100%;
@@ -46,13 +36,57 @@
   text-indent: inherit;
   text-shadow: inherit;
   text-align: inherit;
+  word-break: break-all;
 }
-/*** Possibly Custom Styles ***/
-.rich-text-area .mirror .mention {
-  background: hsl(217, 30%, 88%);
+.rich-text-area .typeahead {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  background-color: hsl(0, 100%, 100%);
+  border: 1px solid hsl(0, 0%, 80%);
+  border: 1px solid hsla(0, 0%, 0%, 0.2);
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 0 5px 10px hsla(0, 0%, 0%, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px hsla(0, 0%, 0%, 0.2);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
 }
-.rich-text-area .mirror .tag {
-  background: hsl(145,53%,74%);
+
+.rich-text-area .typeahead li a {
+  display: block;
+  padding: 3px 20px;
+  clear: both;
+  font-weight: normal;
+  line-height: 20px;
+  color: #333333;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.rich-text-area .typeahead > .active > a,
+.rich-text-area .typeahead > .active > a:hover,
+.rich-text-area .typeahead > .active > a:active {
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #0081c2;
+  background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
+  background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
+  background-image: -o-linear-gradient(top, #0088cc, #0077b3);
+  background-image: linear-gradient(to bottom, #0088cc, #0077b3);
+  background-repeat: repeat-x;
+  outline: 0;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
 }
 /*** Utility Styles ***/
 .rich-text-area + *:before,

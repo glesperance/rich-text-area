@@ -89,6 +89,26 @@ textarea {
   font-size: 14px
 }
 
+.rich-text-area .mirror .meta {
+  -webkit-border-radius: 2px;
+     -moz-border-radius: 2px;
+          border-radius: 2px;
+  
+  -webkit-box-shadow: 0 0 0 1px hsl(219, 63%, 78%);
+     -mox-box-shadow: 0 0 0 1px hsl(219, 63%, 78%);
+          box-shadow: 0 0 0 1px hsl(219, 63%, 78%);
+  
+  font-weight: normal;
+}
+
+.rich-text-area .mirror .meta.hashtag {
+  background-color: hsl(145,53%,74%)
+}
+
+.rich-text-area .mirror .meta.mention {
+  background-color : hsl(219, 65%, 84%)
+}
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */
