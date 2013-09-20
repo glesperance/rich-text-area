@@ -1,4 +1,19 @@
-(function ($) {
+/*
+* Rich Text Area JS Framework v0.0.1
+* Copyright (c) 2013 Wavo.me Inc. (https://wavo.me)
+* Licensed under the MIT license.
+*/
+(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD
+    define(['jquery', 'underscore'], function ($, _) {
+      factory(root, $, _);
+    });
+  } else {
+    // Browser globals
+    factory(root, root.jQuery, root._);
+  }
+}(this, function (root, $, _) {
 
   /* ======================================================================= *
    *  CONSTANTS                                                              *
@@ -1104,4 +1119,4 @@
       throw 'RichTextArea Plugin Called without being Initialized.'
   }
   
-}(jQuery));
+}));

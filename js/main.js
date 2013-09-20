@@ -86,7 +86,7 @@
           source: ["Barack Obama", "George W. Bush", "Bill Clinton", "George Herbert Walker Bush", "Ronald Reagan", "Jimmy Carter", "Gerald Ford", "Richard Nixon", "Lyndon B. Johnson", "John F. Kennedy", "Dwight D. Eisenhower", "Harry S. Truman", "Franklin D. Roosevelt", "Herbert Hoover", "Calvin Coolidge", "Warren G. Harding", "Woodrow Wilson", "William Howard Taft", "Theodore Roosevelt", "William McKinley", "Benjamin Harrison", "Grover Cleveland", "Chester A. Arthur", "James A. Garfield", "Rutherford B. Hayes", "Ulysses S. Grant", "Andrew Johnson", "Abraham Lincoln", "James Buchanan", "Franklin Pierce", "Millard Fillmore", "Zachary Taylor", "James K. Polk", "John Tyler", "William Henry Harrison", "Martin Van Buren", "Andrew Jackson", "John Quincy Adams", "James Monroe", "James Madison", "Thomas Jefferson", "John Adams", "George Washington"]
         , matcher: function (item) {
             var query = this.query.slice(1)
-            return ~ item.toLowerCase().indexOf(query) && item != query
+            return ~ item.toLowerCase().indexOf(query.toLowerCase()) && item != query
           }
         , highlighter: function (item) {
             var query = this.query.slice(1).replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
