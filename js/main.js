@@ -83,10 +83,13 @@
       }
 
     , typeahead: {
-          source: ["Barack Obama", "George W. Bush", "Bill Clinton", "George Herbert Walker Bush", "Ronald Reagan", "Jimmy Carter", "Gerald Ford", "Richard Nixon", "Lyndon B. Johnson", "John F. Kennedy", "Dwight D. Eisenhower", "Harry S. Truman", "Franklin D. Roosevelt", "Herbert Hoover", "Calvin Coolidge", "Warren G. Harding", "Woodrow Wilson", "William Howard Taft", "Theodore Roosevelt", "William McKinley", "Benjamin Harrison", "Grover Cleveland", "Chester A. Arthur", "James A. Garfield", "Rutherford B. Hayes", "Ulysses S. Grant", "Andrew Johnson", "Abraham Lincoln", "James Buchanan", "Franklin Pierce", "Millard Fillmore", "Zachary Taylor", "James K. Polk", "John Tyler", "William Henry Harrison", "Martin Van Buren", "Andrew Jackson", "John Quincy Adams", "James Monroe", "James Madison", "Thomas Jefferson", "John Adams", "George Washington"]
+          source: [{"text":"Barack Obama","id":0},{"text":"George W. Bush","id":1},{"text":"Bill Clinton","id":2},{"text":"George Herbert Walker Bush","id":3},{"text":"Ronald Reagan","id":4},{"text":"Jimmy Carter","id":5},{"text":"Gerald Ford","id":6},{"text":"Richard Nixon","id":7},{"text":"Lyndon B. Johnson","id":8},{"text":"John F. Kennedy","id":9},{"text":"Dwight D. Eisenhower","id":10},{"text":"Harry S. Truman","id":11},{"text":"Franklin D. Roosevelt","id":12},{"text":"Herbert Hoover","id":13},{"text":"Calvin Coolidge","id":14},{"text":"Warren G. Harding","id":15},{"text":"Woodrow Wilson","id":16},{"text":"William Howard Taft","id":17},{"text":"Theodore Roosevelt","id":18},{"text":"William McKinley","id":19},{"text":"Benjamin Harrison","id":20},{"text":"Grover Cleveland","id":21},{"text":"Chester A. Arthur","id":22},{"text":"James A. Garfield","id":23},{"text":"Rutherford B. Hayes","id":24},{"text":"Ulysses S. Grant","id":25},{"text":"Andrew Johnson","id":26},{"text":"Abraham Lincoln","id":27},{"text":"James Buchanan","id":28},{"text":"Franklin Pierce","id":29},{"text":"Millard Fillmore","id":30},{"text":"Zachary Taylor","id":31},{"text":"James K. Polk","id":32},{"text":"John Tyler","id":33},{"text":"William Henry Harrison","id":34},{"text":"Martin Van Buren","id":35},{"text":"Andrew Jackson","id":36},{"text":"John Quincy Adams","id":37},{"text":"James Monroe","id":38},{"text":"James Madison","id":39},{"text":"Thomas Jefferson","id":40},{"text":"John Adams","id":41},{"text":"George Washington","id":42}]
+        
+        , mapToText: function (o) { return o.text }
+
         , matcher: function (item) {
             var query = this.query.slice(1)
-            return ~ item.toLowerCase().indexOf(query.toLowerCase()) && item != query
+            return ~ this.mapToText(item).toLowerCase().indexOf(query.toLowerCase())
           }
         , highlighter: function (item) {
             var query = this.query.slice(1).replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
@@ -97,5 +100,10 @@
       }
   })
  
-  
+  $('.get-value').click(function () {
+    var value = $richTextArea.richTextArea('value')
+    console.log(value)
+    alert(JSON.stringify(value))
+  })
+
 }(jQuery))

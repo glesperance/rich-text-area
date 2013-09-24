@@ -191,6 +191,7 @@
         this.highlighter = this.options.highlighter || this.highlighter
         this.updater = this.options.updater || this.updater
         this.source = this.options.source
+        this.mapToText = this.options.mapToText || _.identity
         this.$menu = $(this.options.menu)
         this.shown = false
         this._events = {}
@@ -200,7 +201,7 @@
       }
 
     , select: function () {
-        var val = this.$menu.find('.active').attr('data-value')
+        var val = this.$menu.find('.active').data('value')
         
         // this.$element
         //   .val(this.updater(val))
@@ -278,7 +279,7 @@
       }
 
     , matcher: function (item) {
-        return ~item.toLowerCase().indexOf(this.query.toLowerCase())
+        return ~this.mapToText(item).toLowerCase().indexOf(this.query.toLowerCase())
       }
 
     , sorter: function (items) {
@@ -288,8 +289,8 @@
           , item
 
         while (item = items.shift()) {
-          if (!item.toLowerCase().indexOf(this.query.toLowerCase())) beginswith.push(item)
-          else if (~item.indexOf(this.query)) caseSensitive.push(item)
+          if (!this.mapToText(item).toLowerCase().indexOf(this.query.toLowerCase())) beginswith.push(item)
+          else if (~this.mapToText(item).indexOf(this.query)) caseSensitive.push(item)
           else caseInsensitive.push(item)
         }
 
@@ -307,8 +308,8 @@
         var that = this
 
         items = $(items).map(function (i, item) {
-          i = $(that.options.item).attr('data-value', item)
-          i.find('a').html(that.highlighter(item))
+          i = $(that.options.item).data('value', item)
+          i.find('a').html(that.highlighter(that.mapToText(item)))
           return i[0]
         })
 
@@ -442,7 +443,11 @@
         this._content = typeof options.content === 'string'
                           ? options.content.split('')
                           : option.content
+
+        this._value = options.value
+
         delete options.content
+        delete options.value
 
         this.options = options
 
@@ -495,7 +500,8 @@
 
     , clone: function (options) {
         return new this.constructor(_.extend({}, this.options, { 
-          content : this.content() 
+            content : this.content()
+          , value   : this._value
         }, options))
       }
 
@@ -519,6 +525,10 @@
 
     , content: function (start, end) {
         return this._content.slice(start, end).join('')
+      }
+
+    , value: function () {
+        return this._value || this.content()
       }
 
     , htmlContent: function () {
@@ -611,7 +621,6 @@
       }
 
     , _replaceMatchWithTag: function (options) {
-
         if (!options) options = {}
 
         if (!this.match) return
@@ -631,7 +640,10 @@
           tags.push(new PlainTextTag({ content : this.content(0, match.index) }))
 
         // Insert the tag, replacing the matched text
-        tags.push(new matchingTagClass({ content : content }))
+        tags.push(new matchingTagClass({ 
+            content : content
+          , value   : options.value
+        }))
 
         // Create a plain-text tag with a space a teh start and
         // if there is some plain-text left after the tag, push it at the end
@@ -671,7 +683,10 @@
       }
 
     , onTypeaheadSelect: function (selection) {
-        this._replaceMatchWithTag({ content : selection })
+        this._replaceMatchWithTag({ 
+            value   : selection
+          , content : this.typeahead.mapToText(selection) 
+        })
       }
 
     , clone: function () {
@@ -1000,8 +1015,6 @@
 
     this._firstSelectedTag = firstSelectedTag
     
-    console.log('refreshSelection')
-
     if (!options.silent && firstSelectedTag && firstSelectedTag.onSelect)
       firstSelectedTag.onSelect({
           start : selection.start - firstSelectedTag.start()
@@ -1040,7 +1053,7 @@
     return tag
   }
 
-  RichTextArea.prototype.content = RichTextArea.prototype.val = function () {
+  RichTextArea.prototype.content = function () {
     return _.reduce(this.tags, function (memo, tag) {
       return memo += tag.content()
     }, '')
@@ -1051,6 +1064,14 @@
       memo += tag.mirrorContent()
       return memo
     }, '')
+  }
+
+  RichTextArea.prototype.value = function () {
+    return _.reduce(this.tags, function (mapped, tags) { 
+      var value = tags.value()
+      if (value) mapped.push(value)
+      return mapped
+    }, [])
   }
 
   /* ===================================================================== *
@@ -1110,10 +1131,10 @@
       , action  = args.shift()
 
     if (!this.richTextAreaInstance && typeof action === 'object')
-      this.richTextAreaInstance = new RichTextArea(this, action)
+      return this.richTextAreaInstance = new RichTextArea(this, action)
       
     else if (action)
-      this.richTextAreaInstance[action].apply(this.richTextAreaInstance[action], args)
+      return this.richTextAreaInstance[action].apply(this.richTextAreaInstance, args)
      
     else
       throw 'RichTextArea Plugin Called without being Initialized.'
