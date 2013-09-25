@@ -716,12 +716,12 @@
     , mirrorContent: function () {
         var content = this.htmlContent() 
         
-        var highligthTagClasses = _.filter(this.richTextArea._tagClasses, function (t) {
+        var highlightTagClasses = _.filter(this.richTextArea._tagClasses, function (t) {
           return !!t.highlighter
         })
 
         // Pass the content through the highlighter
-        _.each(highligthTagClasses, function (highligthTagClass) {
+        _.each(highlightTagClasses, function (highligthTagClass) {
           content = highligthTagClass.highlighter(content)
         })
 
