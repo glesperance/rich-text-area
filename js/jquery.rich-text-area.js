@@ -1,5 +1,5 @@
 /*
-* Rich Text Area JS Framework v0.0.1
+* Rich Text Area JS Framework v0.0.2
 * Copyright (c) 2013 Wavo.me Inc. (https://wavo.me)
 * Licensed under the MIT license.
 */
