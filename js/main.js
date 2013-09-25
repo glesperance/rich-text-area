@@ -21,7 +21,6 @@
       typeName: 'hashtag'
     , className: 'meta hashtag'
 
-
     , highlighter: function (content) {
         return content.replace(/(^|&nbsp;|<br\/>)(#[-_0-9a-zA-Z]+)/g, function ($0, $1, $2) {
           return $1 + '<span class="meta hashtag">' + $2 + '</span>'
