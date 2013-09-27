@@ -105,4 +105,6 @@
     alert(JSON.stringify(value))
   })
 
+  $richTextArea.richTextArea('focus')
+
 }(jQuery))

@@ -1,5 +1,5 @@
 /*
-* Rich Text Area JS Framework v0.0.2
+* Rich Text Area JS Framework v0.0.3
 * Copyright (c) 2013 Wavo.me Inc. (https://wavo.me)
 * Licensed under the MIT license.
 */
@@ -1051,6 +1051,10 @@
     this.tags.push(tag)
 
     return tag
+  }
+
+  RichTextArea.prototype.focus = function () {
+    this.$textarea.focus()
   }
 
   RichTextArea.prototype.content = function () {
