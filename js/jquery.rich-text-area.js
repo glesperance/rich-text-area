@@ -1,5 +1,5 @@
 /*
-* Rich Text Area JS Framework v0.0.3
+* Rich Text Area JS Framework v0.0.4
 * Copyright (c) 2013 Wavo.me Inc. (https://wavo.me)
 * Licensed under the MIT license.
 */
@@ -1008,7 +1008,7 @@
     })
 
     if (!firstSelectedTag)
-      firstSelectedTag = this._pushTag({ typeName : PLAIN_TEXT_TAG_TYPE, content : '' })
+      firstSelectedTag = this._pushTag({ type : PLAIN_TEXT_TAG_TYPE, content : '' })
 
     if (this._firstSelectedTag && this._firstSelectedTag.id !== firstSelectedTag.id)
       this._firstSelectedTag.blur()
@@ -1040,9 +1040,9 @@
   }
 
   RichTextArea.prototype._pushTag = function(options) {
-    var tagClass  = options.typeName === PLAIN_TEXT_TAG_TYPE
+    var tagClass  = options.type === PLAIN_TEXT_TAG_TYPE
                       ? PlainTextTag
-                      : this._tagClasses[options.typeName]
+                      : this._tagClasses[options.type]
 
     var tag = new tagClass(_.extend(options, {
       richTextArea: this
@@ -1070,12 +1070,22 @@
     }, '')
   }
 
-  RichTextArea.prototype.value = function () {
-    return _.reduce(this.tags, function (mapped, tags) { 
-      var value = tags.value()
-      if (value) mapped.push(value)
-      return mapped
-    }, [])
+  RichTextArea.prototype.value = function (newTags) {
+    var self = this
+
+    if (!newTags)
+      return _.reduce(this.tags, function (mapped, tags) { 
+        var value = tags.value()
+        if (value) mapped.push(value)
+        return mapped
+      }, [])
+
+    _.each(newTags, function (tag) {
+      self._pushTag(typeof tag == 'object' ? tag : { content : tag, type : PLAIN_TEXT_TAG_TYPE })
+    })
+
+    this.update()
+
   }
 
   /* ===================================================================== *
@@ -1088,10 +1098,6 @@
     
     this._tagClasses = {}
     this.tags = []
-
-    // this._pushTag({ typeName : PLAIN_TEXT_TAG_TYPE, content : '9876543210' })
-    // this._pushTag({ typeName : PLAIN_TEXT_TAG_TYPE, content : 'abcdefghij' })
-    // this._pushTag({ typeName : PLAIN_TEXT_TAG_TYPE, content : '0123456789' })
 
     this.$el = $el
     
