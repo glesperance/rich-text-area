@@ -1,5 +1,5 @@
 /*
-* Rich Text Area CSS Framework v0.0.3
+* Rich Text Area CSS Framework v0.0.4
 * Copyright (c) 2013 Wavo.me Inc. (https://wavo.me)
 * Licensed under the MIT license.
 */
@@ -11,9 +11,10 @@
   background: transparent;
   position: absolute;
   left: 0;
+  overflow: hidden;
 }
 .rich-text-area .mirror-container {
-  overflow-y: hidden;
+  overflow: hidden;
   background: white;
   float:left;
 }
@@ -25,9 +26,8 @@
 }
 
 .rich-text-area .mirror-container, .rich-text-area textarea {
-  /*position: absolute;*/
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   line-height: inherit;
   font-size: inherit;
   font-family: inherit;

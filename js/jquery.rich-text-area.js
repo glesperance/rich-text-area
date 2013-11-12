@@ -1,5 +1,5 @@
 /*
-* Rich Text Area JS Framework v0.0.4
+* Rich Text Area JS Framework v0.0.5
 * Copyright (c) 2013 Wavo.me Inc. (https://wavo.me)
 * Licensed under the MIT license.
 */
@@ -989,7 +989,11 @@
       this.$textarea.setSelectionRange(this._selection)
     }
 
-    this.$mirror.css('margin-top', -this.$textarea.scrollTop())
+    // Grow the textarea to be the same size as mirrorContainer
+    this.$textarea.height(this.$mirrorContainer.height())
+
+    // Also override default browser scroll of textarea
+    this.$textarea.scrollTop(0)
 
     return this
   }
@@ -1064,10 +1068,17 @@
   }
 
   RichTextArea.prototype.mirrorContent = function () {
-    return _.reduce(this.tags, function (memo, tag) {
+    var mirrorContent = _.reduce(this.tags, function (memo, tag) {
       memo += tag.mirrorContent()
       return memo
     }, '')
+
+    // Make sure we have at least one character after the last line break if 
+    // the line-break is the last thing in our buffer.
+    // Otherwise the browser ignores the last line...
+    mirrorContent = mirrorContent.replace(/(<br\/?>)(<\/span>)$/, '$1&nbsp;$2')
+
+    return mirrorContent
   }
 
   RichTextArea.prototype.value = function (newTags) {
@@ -1106,7 +1117,8 @@
     
     this.$textarea = this.$el.find('textarea')
     this.$textarea.attr('placeholder', options.placeholder)
-    
+
+    this.$mirrorContainer = this.$el.find('.mirror-container')
     this.$mirror = this.$el.find('.mirror')
                    
     this.$el.on('change keydown paste', 'textarea', this._onChange)
