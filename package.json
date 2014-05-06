@@ -1,0 +1,29 @@
+{
+  "name": "jquery.rich-text-area"
+, "description": "JQuery plugin allowing  you to create rich text area controls (with hashtaging and mentions) like facebook"
+, "version": "0.1.0"
+, "homepage": "https://github.com/glesperance/rich-text-area"
+
+, "repository":
+  { "type" : "git"
+  , "url" : "git://github.com/glesperance/rich-text-area.git"
+  }
+
+, "author": "Gabriel Lesperance <info@glesperance.com> (glesperance.com)"
+, "main": "launcher.js"
+, "engines": {
+    "node": ">=0.10.0"
+  }
+
+, "devDependencies": {
+      "chai"                : "1.9.x"
+    , "mocha"               : "1.18.x"
+    , "selenium-webdriver"  : "2.41.x"
+  }
+
+, "scripts": {
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha"
+  }
+
+, "dependencies": {}
+}
