@@ -19,3 +19,4 @@ CVS
 *.sublime-workspace
 *.sublime-project
 ___*
+node_modules
