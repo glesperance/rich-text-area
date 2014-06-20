@@ -834,7 +834,7 @@
           selection.start = selection.start - 1
         _removeSelection()
         self._selection.end = selection.start
-        done()
+        _.defer(done)
         break
 
       case DELETE_CHARACTER_KEYCODE:
@@ -843,7 +843,7 @@
           selection.end = selection.end + 1
         _removeSelection()
         self._selection.end = selection.start
-        done()
+        _.defer(done)
         break
 
       default:
@@ -893,10 +893,10 @@
       if (updatedTags) {
         _.each(self.tags, function (tag) { tag.remove() })
         _.each(updatedTags, self._listenToTag)
-        self.tags = updatedTags
+        
+        self.tags = updatedTags;
       }
-
-      _.defer(self.update)
+      self.update();
     } 
 
   }
